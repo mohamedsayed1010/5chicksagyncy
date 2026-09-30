@@ -1,0 +1,14 @@
+# Design source files (not used by the website) and local tooling — keep them out of Vercel uploads.
+Character/
+Colors/
+Elements/
+Logo/
+Logo Dynamic/
+Pattern/
+tmp/
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+supabase/.temp/

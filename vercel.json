@@ -1,0 +1,6 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/((?!.*\\.[a-zA-Z0-9]{1,8}$).*)", "destination": "/spa.html" }
+  ]
+}

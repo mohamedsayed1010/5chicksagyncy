@@ -1,0 +1,12 @@
+public/assets/videos/
+tmp/
+node_modules/
+dist/
+
+# Local environment files (Supabase credentials etc.) — never commit
+.env
+.env.*
+!.env.example
+
+# Supabase CLI local link state (project ref, pooler URL)
+supabase/.temp/

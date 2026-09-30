@@ -1,0 +1,463 @@
+/* Service detail pages (/services/<slug>). Builds on the site's tokens and .section/.eyebrow/.contact
+   classes from styles.css; everything specific to these pages is prefixed sp-. */
+.sp h2.sp-h2 {
+  font-size: clamp(40px, 4.6vw, 70px);
+  max-width: 14ch;
+}
+
+/* Hero */
+.sp-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+  align-items: center;
+  gap: 6%;
+  padding: 40px 5% 80px;
+  border-bottom: 1px solid var(--line);
+  background: radial-gradient(
+    ellipse at 80% 45%,
+    color-mix(in srgb, var(--service-color) 9%, transparent),
+    transparent 60%
+  );
+}
+.sp-crumbs ol {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 42px;
+  padding: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.sp-crumbs li + li::before {
+  content: '/';
+  margin-inline-end: 8px;
+  color: #ffffff40;
+}
+.sp-crumbs a:hover {
+  color: var(--text);
+}
+.sp-crumbs [aria-current] {
+  color: var(--service-color);
+}
+.sp-eyebrow {
+  color: var(--service-color);
+}
+.sp h1.sp-title {
+  margin-top: 18px;
+  font-size: clamp(60px, 8vw, 128px);
+  color: var(--service-color);
+  overflow-wrap: anywhere;
+}
+.sp-lead {
+  margin-top: 22px;
+  font-size: clamp(21px, 2vw, 28px);
+  line-height: 1.35;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  max-width: 24ch;
+}
+.sp-desc {
+  margin-top: 18px;
+  max-width: 560px;
+  font-size: 15px;
+  line-height: 1.9;
+  font-weight: 600;
+  color: #c6c8bd;
+}
+.sp-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 34px;
+}
+.sp-btn {
+  min-height: 50px;
+  padding: 14px 24px;
+  font-size: 13px;
+}
+.sp-hero__visual {
+  position: relative;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 20px;
+  border: 1px solid color-mix(in srgb, var(--service-color) 30%, transparent);
+  background: radial-gradient(
+    circle at 50% 45%,
+    color-mix(in srgb, var(--service-color) 16%, #1b1b1b),
+    #171717 72%
+  );
+  overflow: hidden;
+}
+.sp-hero__visual::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 3px;
+  background: var(--service-color);
+  box-shadow: 0 0 18px var(--service-color);
+}
+.sp-orbit {
+  position: absolute;
+  inset: 14%;
+  border: 1px dashed color-mix(in srgb, var(--service-color) 35%, transparent);
+  border-radius: 50%;
+}
+.sp-hero__visual img {
+  position: relative;
+  width: 52%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 26px color-mix(in srgb, var(--service-color) 25%, transparent));
+}
+
+/* Overview */
+.sp-overview__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8%;
+}
+.sp-overview__text p {
+  font-size: 16px;
+  line-height: 1.9;
+  font-weight: 600;
+  color: #c6c8bd;
+  max-width: 560px;
+}
+.sp-overview__text p + p {
+  margin-top: 18px;
+}
+
+/* Offers */
+.sp-offers {
+  background: var(--dark);
+}
+.sp-offers__grid,
+.sp-value__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 40px;
+}
+.sp-offer {
+  position: relative;
+  padding: 30px 26px;
+  border: 1px solid #ffffff1f;
+  border-radius: 12px;
+  background: #1c1c1c;
+}
+.sp-offer::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 3px;
+  margin-bottom: 22px;
+  border-radius: 3px;
+  background: var(--service-color);
+}
+.sp h3 {
+  font-size: 19px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+.sp-offer p,
+.sp-step p,
+.sp-value__grid p {
+  margin-top: 12px;
+  font-size: 13px;
+  line-height: 1.85;
+  font-weight: 600;
+  color: #b9bbb1;
+}
+
+/* Process */
+.sp-note {
+  margin-top: 16px;
+  max-width: 560px;
+  font-size: 13px;
+  line-height: 1.8;
+  font-weight: 600;
+  color: var(--muted);
+}
+.sp-steps {
+  counter-reset: step;
+  list-style: none;
+  display: grid;
+  /* Any number of steps: equal columns that wrap onto new rows when there are many. */
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0;
+  margin: 44px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+.sp-step {
+  counter-increment: step;
+  padding: 26px 22px 6px 0;
+}
+html[dir='rtl'] .sp-step {
+  padding: 26px 0 6px 22px;
+}
+.sp-step::before {
+  content: counter(step, decimal-leading-zero);
+  display: block;
+  margin-bottom: 14px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--service-color);
+}
+
+/* Why it matters (light band, like the About section) */
+.sp-value {
+  background: #eeeee5;
+  color: #202020;
+}
+.sp-value .eyebrow {
+  color: #393d37;
+}
+.sp-value__grid article {
+  padding-top: 22px;
+  border-top: 2px solid #20202030;
+}
+.sp-value__grid p {
+  color: #55584f;
+}
+
+/* FAQ */
+.sp-faq {
+  background: var(--dark);
+}
+.sp-faq__grid {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 8%;
+  align-items: start;
+}
+.sp-related {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 28px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid color-mix(in srgb, var(--service-color) 50%, transparent);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--service-color);
+}
+.sp-related .arrow-icon {
+  width: 17px;
+  height: 17px;
+  min-width: 17px;
+}
+.sp-faq__list details {
+  border-bottom: 1px solid var(--line);
+}
+.sp-faq__list details:first-child {
+  border-top: 1px solid var(--line);
+}
+.sp-faq__list summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 22px 0;
+  cursor: pointer;
+  list-style: none;
+  font-size: 16px;
+  font-weight: 700;
+}
+.sp-faq__list summary::-webkit-details-marker {
+  display: none;
+}
+.sp-faq__list summary::after {
+  content: '+';
+  flex: 0 0 auto;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--service-color);
+  transition: transform 0.25s;
+}
+.sp-faq__list details[open] summary::after {
+  transform: rotate(45deg);
+}
+.sp-faq__list summary:focus-visible {
+  outline: 3px solid var(--green);
+  outline-offset: 4px;
+}
+.sp-faq__list details p {
+  padding: 0 0 24px;
+  max-width: 620px;
+  font-size: 14px;
+  line-height: 1.9;
+  font-weight: 600;
+  color: #c6c8bd;
+}
+
+/* Other services */
+.sp-others__grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 40px 0 0;
+  padding: 0;
+}
+.sp-other {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  height: 100%;
+  padding: 20px 22px;
+  border: 1px solid #ffffff1f;
+  border-radius: 12px;
+  background: #1c1c1c;
+  transition:
+    border-color 0.25s,
+    transform 0.25s;
+}
+.sp-other:hover {
+  border-color: color-mix(in srgb, var(--service-color) 55%, transparent);
+  transform: translateY(-3px);
+}
+.sp-other img {
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+.sp-other__text {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  margin-inline-end: auto;
+}
+.sp-other__title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--service-color);
+}
+.sp-other__tagline {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.sp-other .arrow-icon {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  color: var(--service-color);
+}
+
+/* Final CTA reuses the homepage contact band; only the WhatsApp glyph needs sizing. */
+.sp-cta__wa {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+  display: block;
+}
+
+/* Arabic typography, matching the site's Arabic rules */
+html[lang='ar'] .sp h1.sp-title {
+  font-size: clamp(44px, 5.4vw, 84px);
+  line-height: 1.4;
+}
+html[lang='ar'] .sp h2.sp-h2 {
+  font-size: clamp(32px, 3.6vw, 54px);
+  line-height: 1.5;
+  max-width: 18ch;
+}
+html[lang='ar'] .sp h3,
+html[lang='ar'] .sp-lead {
+  font-family: Tahoma, Arial, sans-serif;
+  letter-spacing: 0;
+  line-height: 1.8;
+}
+html[lang='ar'] .sp-desc,
+html[lang='ar'] .sp-overview__text p,
+html[lang='ar'] .sp-faq__list details p {
+  font-size: 15px;
+  line-height: 2;
+}
+html[lang='ar'] .sp-offer p,
+html[lang='ar'] .sp-step p,
+html[lang='ar'] .sp-value__grid p,
+html[lang='ar'] .sp-note {
+  font-size: 14px;
+  line-height: 2;
+}
+html[lang='ar'] .sp-crumbs ol {
+  letter-spacing: 0;
+  font-size: 12px;
+}
+
+@media (max-width: 1050px) {
+  .sp-steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: 10px;
+  }
+}
+@media (max-width: 900px) {
+  .sp-hero {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding-bottom: 60px;
+  }
+  .sp-hero__visual {
+    max-width: 320px;
+    width: 100%;
+  }
+  .sp-offers__grid,
+  .sp-value__grid,
+  .sp-others__grid {
+    grid-template-columns: 1fr;
+  }
+  .sp-overview__grid,
+  .sp-faq__grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+@media (max-width: 600px) {
+  .sp-hero {
+    padding: 28px 5% 48px;
+  }
+  .sp-crumbs ol {
+    margin-bottom: 28px;
+  }
+  .sp h1.sp-title {
+    font-size: 16vw;
+  }
+  html[lang='ar'] .sp h1.sp-title {
+    font-size: 11vw;
+  }
+  .sp h2.sp-h2 {
+    font-size: 11vw;
+  }
+  html[lang='ar'] .sp h2.sp-h2 {
+    font-size: 8.5vw;
+  }
+  .sp-hero__visual {
+    max-width: 240px;
+  }
+  .sp-actions .svc-btn {
+    flex: 1 1 auto;
+  }
+  .sp-steps {
+    grid-template-columns: 1fr;
+    row-gap: 0;
+  }
+  .sp-step,
+  html[dir='rtl'] .sp-step {
+    padding: 20px 0 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .sp-overview__text p {
+    font-size: 14px;
+  }
+  .sp-faq__list summary {
+    font-size: 15px;
+  }
+}

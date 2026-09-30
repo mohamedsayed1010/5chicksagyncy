@@ -1,0 +1,89 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: #303030;
+  color: #f4f3eb;
+  font-family: Arial, sans-serif;
+}
+.reader-tools {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding: 10px;
+  background: #202020f5;
+  border-bottom: 1px solid #ffffff25;
+  font-size: 11px;
+}
+.reader-tools button {
+  border: 1px solid #ffffff40;
+  background: transparent;
+  color: #00ff87;
+  width: 30px;
+  height: 28px;
+  border-radius: 4px;
+  font-size: 20px;
+  cursor: pointer;
+}
+button:focus-visible {
+  outline: 2px solid #00ff87;
+  outline-offset: 2px;
+}
+.document {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  background: white;
+}
+.document img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+}
+.reader-tools a {
+  color: #00ff87;
+  text-decoration: none;
+  margin-left: 15px;
+  font-size: 10px;
+}
+.document:focus-visible {
+  outline: 2px solid #00ff87;
+}
+body.zoom .document {
+  max-width: none;
+}
+@media (max-width: 500px) {
+  .reader-tools {
+    gap: 10px;
+  }
+  .reader-tools a {
+    font-size: 9px;
+    margin-left: 2px;
+  }
+}
+body {
+  font-weight: 600;
+}
+.reader-tools a {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+.arrow-icon {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+html[dir='rtl'] .directional-icon {
+  transform: scaleX(-1);
+}
