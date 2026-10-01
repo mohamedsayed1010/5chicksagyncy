@@ -6,6 +6,8 @@ import '../styles/contact-form.css';
 
 const EMPTY = { name: '', phone: '', details: '', link: '', website: '' };
 const FIELDS = ['name', 'phone', 'details', 'link'];
+// Web3Forms public access key (safe to ship in the browser bundle).
+const WEB3FORMS_KEY = '2a326c14-8a22-4bf6-82fa-ed921efcc3e9';
 
 // Error code (from validation.js) → message, per field.
 const MESSAGES = {
@@ -28,7 +30,7 @@ const MESSAGES = {
   }
 };
 
-// Contact form section: name, phone, project details and an optional link, emailed by /api/contact.
+// Contact form section: name, phone, project details and an optional link, emailed by Web3Forms.
 export default function ContactForm() {
   const { lang, ar, t } = useLanguage();
   const [values, setValues] = useState(EMPTY);
@@ -58,13 +60,24 @@ export default function ContactForm() {
 
     setStatus({ state: 'sending' });
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...values, lang })
-      });
-      const result = await response.json().catch(() => ({}));
-      if (!response.ok || !result.ok) throw new Error(result.error || 'send');
+      // Honeypot: a hidden field real visitors never fill. Pretend success so bots don't retry.
+      if (!values.website) {
+        const formData = new FormData(formRef.current);
+        for (const [key, value] of Object.entries(validateContact(values).values)) formData.set(key, value);
+        formData.delete('website');
+        formData.set('botcheck', values.website);
+        formData.set('language', lang === 'ar' ? 'Arabic' : 'English');
+        formData.set('access_key', WEB3FORMS_KEY);
+        formData.set('subject', 'New Contact Form Submission - 5 Chicks Agency');
+        formData.set('from_name', '5 Chicks Agency Website');
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: formData
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || !result.success) throw new Error(result.message || 'send');
+      }
       setValues(EMPTY);
       setTouched({});
       setStatus({ state: 'success' });

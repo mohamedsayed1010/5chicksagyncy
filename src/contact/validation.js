@@ -1,5 +1,4 @@
-// Contact form rules, shared by the browser form (ContactForm.jsx) and the email function
-// (api/contact.js) so both sides accept exactly the same input. Errors are codes; the form turns
+// Contact form rules used by the browser form (ContactForm.jsx). Errors are codes; the form turns
 // them into English/Arabic messages.
 
 export const LIMITS = { name: 80, phone: 20, details: 2000, link: 500 };

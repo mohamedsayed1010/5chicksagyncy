@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 // `vite preview` behaves like the Vercel deployment (vercel.json):
@@ -27,30 +27,10 @@ const previewRouting = {
   }
 };
 
-// `npm run dev` serves the Vercel function in api/contact.js (Vercel runs it itself in production).
-// Its server-only settings (SMTP_*, CONTACT_TO) are read from .env.local.
-const devApi = {
-  name: 'dev-api',
-  configureServer(server) {
-    const env = loadEnv(server.config.mode, server.config.root, '');
-    for (const key of ['SMTP_HOST', 'SMTP_PORT', 'SMTP_USER', 'SMTP_PASS', 'CONTACT_TO']) {
-      if (env[key] && !process.env[key]) process.env[key] = env[key];
-    }
-    server.middlewares.use('/api/contact', async (req, res, next) => {
-      try {
-        const { default: handler } = await server.ssrLoadModule('/api/contact.js');
-        await handler(req, res);
-      } catch (error) {
-        next(error);
-      }
-    });
-  }
-};
-
 export default defineConfig(({ isSsrBuild }) => ({
   // Absolute base: the SPA serves nested routes such as /services/branding.
   base: '/',
-  plugins: [react(), previewRouting, devApi],
+  plugins: [react(), previewRouting],
   // Pre-bundle every runtime dependency up front (some are only reached through lazy chunks such as
   // the dashboard); otherwise the dev server re-optimizes on first use, which fails on Windows.
   optimizeDeps: {
